@@ -20,9 +20,9 @@ const NewsList = (props) => {
   
     return (
       <Wrapper>
-        {news.map((news, key) => (
+        {news.map((news, index) => (
          <WineListItem 
-            key={key} 
+            key={index} 
             news={news}
            onClick={() => {
            onClickItem(news);
