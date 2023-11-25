@@ -8,7 +8,9 @@ import './App.css';
 import NewsListPage from './components/pages/NewsListPage';
 import WineDetailPage from "./components/pages/WineDetailPage";
 
+
 function App(props) {
+ 
   return (
       <BrowserRouter>
           <Routes>

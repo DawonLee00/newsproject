@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import NewsList from "../list/NewsList";
 import NewsModal from "../ui/NewsModal";
+import axios from 'axios';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -121,11 +122,18 @@ const NewsListPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [hello, setHello] = useState('')
+
+  useEffect(() => {
+      axios.get('http://localhost:8080/api/hello')
+      .then(response => setHello(response.data))
+      .catch(error => console.log(error))
+  }, []);
 
   const navigate = useNavigate();
 
   const apiGet = async (type, param) => {
-    const apiUrl = 'https://openapi.naver.com/v1/search/' + type + '?query=' + param + '&display=100';
+    const apiUrl = '/api/v1/search/' + type + '?query=' + param + '&display=100';
     try {
       const resp = await fetch(apiUrl, {
         method: 'GET',
@@ -159,12 +167,14 @@ const closeModal = () => {
   setModalContent(null);
 };
 
+
   return (
     <Wrapper>
       
       <UpperContainer>
         <LogoContainer>
           <LogoImage src="asset/logo.svg" alt="Logo" />
+          {hello}
         </LogoContainer>
         <ButtonContainer>
           <Button src="asset/newspaper.svg" alt="newspaper" />
