@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
+import he from 'he';
 
 const Wrapper = styled.div`
   display: flex;
@@ -76,24 +77,28 @@ const RoundedContainer = styled.div`
   padding: 3px;
   width: ${(props) => props.width || 'auto'};
   height: ${(props) => props.height || 'auto'};
-
 `;
 
-const NewsListItem = ({index, onClick, key, news}) => {
+
+
+
+const NewsListItem = ({onClick, key, news}) => {
 
     const title = news.title;
-    //const pubDate = moment(props.row.pubDate).format('YYYY.MM.DD HH:mm');
+    const replaced_title=title.replace(/(<([^>]+)>)/ig,"").replace(/&quot;/g,"").replace(/&amp;/g,);
     const desc = news.description;
-  return (
-    <Wrapper key={index} onClick={onClick}>
+    const replaced_desc=desc.replace(/(<([^>]+)>)/ig,"").replace(/&quot;/g,"").replace(/&lt;/g,"").replace(/&gt;/g,"").replace(/&amp;/g,);
+    const pubDate = news.pubDate.split(' ')[0]+" "+news.pubDate.split(' ')[1]+" "+news.pubDate.split(' ')[2]+" "+news.pubDate.split(' ')[3];
+
+    return (
+    <Wrapper key={key} onClick={onClick}>
         <InfoContainer>
-          <NameText>{title}</NameText>
+          <NameText>{replaced_title}</NameText>
         <TextContainer2>
-          <DescText>{desc}</DescText>  
+          <DescText>{replaced_desc}</DescText>  
         </TextContainer2>
         <TextContainer>
-            <RoundedContainer><GrayText>{news.pubDate}</GrayText></RoundedContainer>
-            
+            <RoundedContainer><GrayText>{pubDate}</GrayText></RoundedContainer>
         </TextContainer>
         </InfoContainer>
    
@@ -104,18 +109,3 @@ const NewsListItem = ({index, onClick, key, news}) => {
 };
 
 export default NewsListItem;
-
-//  <ImageContainer src={`https://image.veenoverse.com${imagePath}`}/>
-/*     <InfoContainer>
-
-            <NameText>{wine.name}</NameText>
-            <TextContainer2>
-            <BoldText>{wine.price.currency === 'USD' ? '$' : ''}{wine.price.value}</BoldText>
-            <GrayText>{wine.volume}ml</GrayText>
-            <a href="#" dangerouslySetInnerHTML={{__html: title}}></a>
-            </TextContainer2>
-            <TextContainer>
-              <RoundedContainer><GrayText>{wine.vintage}</GrayText></RoundedContainer>
-              <RoundedContainer><GrayText>{wine.country.name}</GrayText></RoundedContainer>
-            </TextContainer>
-          </InfoContainer> */

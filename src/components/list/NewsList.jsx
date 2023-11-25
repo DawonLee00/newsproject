@@ -7,7 +7,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-   
+    width: 100%;
 `;
 
 
@@ -20,9 +20,9 @@ const NewsList = (props) => {
   
     return (
       <Wrapper>
-        {news.map((news, key) => (
+        {news.map((news, index) => (
          <WineListItem 
-            key={key} 
+            key={index} 
             news={news}
            onClick={() => {
            onClickItem(news);

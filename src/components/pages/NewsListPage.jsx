@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import NewsList from "../list/NewsList";
+import NewsModal from "../ui/NewsModal";
 
 const Wrapper = styled.div`
   width: 100%;
+  max-width:1500px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
-  margin: 8px 8px;
 `;
 
 // 페이지 상단부 로고 + 버튼
@@ -27,7 +28,6 @@ const LogoContainer = styled.div`
 const ButtonContainer = styled.div`
   width: 100%;
   height: 64px; 
-
   justify-content: space-between;
   display: flex;
   border-bottom: 3px solid #000000;
@@ -80,7 +80,6 @@ const CategoryContainer = styled.div`
 
 const MiddleContainer = styled.div`
   width: 100%;
-
   & > *:not(:last-child) {
     margin-bottom: 16px;
   }
@@ -118,6 +117,8 @@ const NewsListPage = () => {
   const [articles, setArticles] = useState(null);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
   const navigate = useNavigate();
 
@@ -143,8 +144,18 @@ const NewsListPage = () => {
   };
 
   useEffect(() => {
-    apiGet('news','최재림');
+    apiGet('news','코스피');
 }, []);
+
+const openModal = (content) => {
+  setIsModalOpen(true);
+  setModalContent(content);
+};
+
+const closeModal = () => {
+  setIsModalOpen(false);
+  setModalContent(null);
+};
 
   return (
     <Wrapper>
@@ -180,10 +191,10 @@ const NewsListPage = () => {
         {articles&& (
           <NewsList
             news={articles}
-            onClickItem={(item)=>{window.open(item.link)}}
+            onClickItem={(item) => openModal(<iframe src={item.link} title="Article" width="100%" height="100%" />)}
           />
         )}
-        
+           <NewsModal isOpen={isModalOpen} onClose={closeModal} content={modalContent} />
         <PaginationContainer>
         {/* 이전 페이지로 돌아가는 버튼 */}
         <PaginationButton src="asset/page_return_button.svg" alt="Previous Page"   />
