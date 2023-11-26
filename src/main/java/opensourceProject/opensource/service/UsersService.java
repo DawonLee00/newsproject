@@ -43,4 +43,10 @@ public class UsersService {
         return usersRepository.findByName(name);
     }
 
+    public Boolean login(String id, String passwd){
+        if(usersRepository.login(id, passwd))
+            return true;
+        return false;
+    }
+
 }

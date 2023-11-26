@@ -52,4 +52,16 @@ public class JpaUsersRepository implements UsersRepository {
         return em.createQuery("select u from Users u", Users.class)
                 .getResultList();
     }
+
+    @Override
+    public Boolean login(String id, String passwd) {
+        List<Users> usersList = em
+                .createQuery("SELECT u FROM Users u WHERE u.id = :id AND u.passwd = :passwd", Users.class)
+                .setParameter("id", id)
+                .setParameter("passwd", passwd)
+                .getResultList();
+
+        return !usersList.isEmpty();
+    }
+
 }

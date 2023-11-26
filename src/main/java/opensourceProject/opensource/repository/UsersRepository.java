@@ -16,5 +16,7 @@ public interface UsersRepository {
 
     Optional<Users> findByPasswd(String passwd);
 
+    Boolean login(String id, String passwd);
+
     List<Users> findAll();
 }
