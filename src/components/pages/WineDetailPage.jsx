@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import WineDetailModule from "../ui/WineDetailModule";
 import PriceChartModule from "../ui/PriceChartModule";
 
-
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -15,7 +14,6 @@ const Wrapper = styled.div`
 `;
 
 const UpperContainer = styled.div`
-
   padding: 8px 0px;
   justify-content: space-between;
   flex-direction: column;
