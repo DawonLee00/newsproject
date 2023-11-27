@@ -77,7 +77,6 @@ const RoundedContainer = styled.div`
   padding: 3px;
   width: ${(props) => props.width || 'auto'};
   height: ${(props) => props.height || 'auto'};
-
 `;
 
 

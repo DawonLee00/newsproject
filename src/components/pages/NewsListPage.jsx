@@ -7,10 +7,10 @@ import axios from 'axios';
 
 const Wrapper = styled.div`
   width: 100%;
+  max-width:1500px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
-  margin: 8px 8px;
 `;
 
 // 페이지 상단부 로고 + 버튼
@@ -29,7 +29,6 @@ const LogoContainer = styled.div`
 const ButtonContainer = styled.div`
   width: 100%;
   height: 64px; 
-
   justify-content: space-between;
   display: flex;
   border-bottom: 3px solid #000000;
@@ -82,7 +81,6 @@ const CategoryContainer = styled.div`
 
 const MiddleContainer = styled.div`
   width: 100%;
-
   & > *:not(:last-child) {
     margin-bottom: 16px;
   }
@@ -154,7 +152,7 @@ const NewsListPage = () => {
   };
 
   useEffect(() => {
-    apiGet('news','최재림');
+    apiGet('news','코스피');
 }, []);
 
 const openModal = (content) => {
