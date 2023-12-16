@@ -116,7 +116,7 @@ const GrayText = styled.span`
 
 const NewsListPage = () => {
   const [articles, setArticles] = useState(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(null); 
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -137,8 +137,8 @@ const NewsListPage = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'X-Naver-Client-Id': 'BQTQ0yYk5ewq2TaTLVmD',
-          'X-Naver-Client-Secret': 'gpIClzMNiQ'
+          'X-Naver-Client-Id': process.env.X_Naver_Client_Id,
+          'X-Naver-Client-Secret': process.env.X_Naver_Client_Secret
         }
       });
       resp.json().then(data => {
