@@ -1,16 +1,17 @@
 package opensourceProject.opensource.controller;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import com.google.gson.JsonObject;
 
 import opensourceProject.opensource.domain.Users;
 import opensourceProject.opensource.service.UsersService;
 
-@Controller
+@RestController
+@RequestMapping("/users")
 public class UsersController {
 
     private final UsersService usersService;
@@ -19,13 +20,8 @@ public class UsersController {
         this.usersService = usersService;
     }
 
-    @GetMapping("/users/new")
-    public String createForm() {
-        return "users/createUsersForm";
-    }
-
-    @PostMapping("/users/new")
-    public String create(UsersForm form) {
+    @PostMapping("new")
+    public String create(@RequestBody UsersForm form) {
         Users users = new Users();
 
         users.setId(form.getId());
@@ -34,26 +30,30 @@ public class UsersController {
         users.setOld(form.getOld());
 
         usersService.join(users);
-        return "redirect:/";
+
+        JsonObject jo = new JsonObject();
+
+        jo.addProperty("Message", "Signin success.");
+        return jo.toString();
     }
 
-    @PostMapping("/users/login")
-    public ResponseEntity<String> login(UsersForm form) {
+    @PostMapping("login")
+    public String login(@RequestBody UsersForm form) {
         Users users = new Users();
         users.setId(form.getId());
         users.setPasswd(form.getPasswd());
 
+        JsonObject jo = new JsonObject();
+
         if (usersService.login(users.getId(), users.getPasswd())) {
-            return ResponseEntity.ok("로그인 성공했습니다.");
+
+            jo.addProperty("Message", "lonin success.");
+            return jo.toString();
+
         } else {
-            return ResponseEntity.status(401).body("로그인 실패했습니다."); // 401은 Unauthorized 상태 코드입니다.
+            jo.addProperty("Message", "lonin failed.");
+            return jo.toString();
         }
     }
 
-    @GetMapping("/users")
-    public String list(org.springframework.ui.Model model) {
-        List<Users> users = usersService.findUsers();
-        model.addAttribute("users", users);
-        return "users/usersList";
-    }
 }

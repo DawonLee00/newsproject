@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import ChartView from './ChartView';
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,6 +56,7 @@ const Bar = styled.div`
   min-width: 20%;
   margin-bottom: 8px;
   color: ${(props) => props.textcolor};
+  width: ${(props) => props.fillPercentage*8}%;
   font-weight: 400;
   font-size: 15px;
   border-radius: 8px;
@@ -97,40 +99,29 @@ const PurpleText = styled.span`
 
 
 const PriceChartModule = (props) => {
-  const { avg, max, value, min, wineData} = props;
-  const maxValue = Math.max(avg, max, value, min);
-
+  const {weatherData} = props;
+ 
   return (
     <Wrapper>
-        <HorizontalWrapper>
-         <UpperContainer2>
-              <GrayText>Real Price / Estimated Price</GrayText>
-              <FlexContainer>
-                <PurpleText weight={700} size={24}>{wineData.data.item.prices[0].value}$</PurpleText>
-                <PurpleText weight={600} size={16}>/{wineData.data.item.prices[0].value}$</PurpleText>
-              </FlexContainer>
-            </UpperContainer2>
-            
-            <IconImage width={32} height={1} src="/asset/Variant4.svg" alt="image" />  
-            </HorizontalWrapper>
+      
       <UpperContainer>
         <ImageContainer width={30} src="/asset/Chip_Button.svg"/>
-        <ImageContainer width={10} src="/asset/all.svg"/>
+
       </UpperContainer>
       <BarContainer>  
-      <Bar barColor="#EBECFF" textcolor="#7A757F" fillPercentage={(avg / maxValue) * 100}>
-        <BarText>Avg {avg}$</BarText>
+      <Bar barColor="#EBECFF" textcolor="#7A757F" fillPercentage={3}>
+        <BarText>평균</BarText>
       </Bar>
-      <Bar barColor="#C0BBFF" textcolor="#7A757F" fillPercentage={(max / maxValue) * 100}>
-        <BarText>Max {max}$</BarText>
+      <Bar barColor="#C0BBFF" textcolor="#7A757F" fillPercentage={10}>
+        <BarText>최대</BarText>
       </Bar>
-      <Bar barColor="#7368F8" textcolor="#ffffff" fillPercentage={(value / maxValue) * 100}>
-        <BarText>Real {value}$</BarText>
+      <Bar barColor="#7368F8" textcolor="#ffffff" fillPercentage={4}>
+        <BarText>현재</BarText>
       </Bar>
-      <Bar barColor="#C0BBFF" textcolor="#7A757F" fillPercentage={(min / maxValue) * 100}>
-        <BarText>Min {min}$</BarText>
+      <Bar barColor="#C0BBFF" textcolor="#7A757F" fillPercentage={1}>
+        <BarText>최소</BarText>
       </Bar>
-      <IconImage width={100} height={10} src="/asset/Price-Chart-Module2.svg" alt="image"/>
+      <ChartView></ChartView>
       </BarContainer>
     </Wrapper>
   );

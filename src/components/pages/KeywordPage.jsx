@@ -129,17 +129,33 @@ const KeywordPage = () => {
 
   const addFilteringKeyword = () => {
     if (filteringKeyword.trim() !== '') {
-      setFilteringKeywords((prevKeywords) => [...prevKeywords, filteringKeyword]);
-      setFilteringKeyword('');
-      closeFilteringModal();
+      if (!filteringKeywords.some(keyword => keyword.word === filteringKeyword)) {
+        setFilteringKeywords((prevKeywords) => [
+          ...prevKeywords,
+          { id: "admin", word: filteringKeyword, filter: 1 },
+        ]);
+  
+        setFilteringKeyword('');
+        closeFilteringModal();
+      } else {
+        alert('이미 필터링 키워드로 설정된 단어입니다.');
+      }
     }
   };
 
   const addInterestKeyword = () => {
     if (interestKeyword.trim() !== '') {
-      setInterestKeywords((prevKeywords) => [...prevKeywords, interestKeyword]);
-      setInterestKeyword('');
-      closeInterestModal();
+      if (!interestKeywords.some(keyword => keyword.word === interestKeyword)) {
+        setInterestKeywords((prevKeywords) => [
+          ...prevKeywords,
+          { id: "admin", word: interestKeyword, filter: 2 },
+        ]);
+  
+        setInterestKeyword('');
+        closeInterestModal();
+      } else {
+        alert('이미 관심 키워드로 설정된 단어입니다.');
+      }
     }
   };
 
@@ -165,10 +181,8 @@ const KeywordPage = () => {
 
   const sendKeywordsToAPI = async () => {
     try {
-      const data = {      
-        filteringKeywords,
-        interestKeywords,
-      };
+      const data = [...filteringKeywords, ...interestKeywords];
+
 
       const response = await fetch('http://localhost:8080/keyword/new', {
         method: 'POST',
@@ -251,7 +265,7 @@ const KeywordPage = () => {
       </KeywordList>
       {filteringKeywords.map((keyword, index) => (
           <KeywordItem className="keyword-list" key={index}>
-            {keyword}
+            {keyword.word}
             <DeleteButton onClick={() => handleDeleteFilteringKeyword(index)}>
               X
             </DeleteButton>
@@ -262,7 +276,7 @@ const KeywordPage = () => {
       </KeywordList>
       {interestKeywords.map((keyword, index) => (
           <KeywordItem className="keyword-list" key={index}>
-            {keyword}
+            {keyword.word}
             <DeleteButton onClick={() => handleDeleteInterestKeyword(index)}>
               X
             </DeleteButton>

@@ -1,17 +1,20 @@
 package opensourceProject.opensource.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import opensourceProject.opensource.domain.Keyword;
+//import opensourceProject.opensource.domain.KeywordId;
+
 import java.util.List;
 import java.util.Optional;
-import opensourceProject.opensource.domain.Keyword;
 
-public interface KeywordRepository {
-    Keyword save(Keyword keyword);
+@Repository
+public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 
-    Optional<Keyword> findById(String id);// 아이디 찾아오기
+    Optional<Keyword> findById(String id);
 
-    Optional<Keyword> findByWord(String id, String word);// 필터링 키워드 찾아오기
+    Optional<Keyword> findByWord(String word);
 
-    void deleteByWord(String id, String word);
-
-    List<Keyword> findAll(); // 모든 거 출력
+    List<Keyword> findAll();
 }
