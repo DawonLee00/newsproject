@@ -26,4 +26,5 @@ public class SpringConfig {
     public UsersRepository usersRepository() {
         return new JpaUsersRepository(em);
     }
+
 }

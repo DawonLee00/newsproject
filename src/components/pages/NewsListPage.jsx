@@ -6,8 +6,7 @@ import NewsModal from "../ui/NewsModal";
 import axios from 'axios';
 
 const Wrapper = styled.div`
-  width: 100%;
-  max-width:1500px;
+  width: 99%;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -28,7 +27,8 @@ const LogoContainer = styled.div`
 
 const ButtonContainer = styled.div`
   width: 100%;
-  height: 64px; 
+  height: 64px;
+  padding: 16px; 
   justify-content: space-between;
   display: flex;
   border-bottom: 3px solid #000000;
@@ -45,7 +45,13 @@ const Text = styled.span`
   font-weight: 600;
   font-size: 16px;
 `;
-
+const Text1 = styled.span`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0px, 0px; 
+  width: 80px;
+`;
 const BoldText = styled.span`
   padding: 16px 8px;
   margin-left: auto;
@@ -121,13 +127,6 @@ const NewsListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [hello, setHello] = useState('')
-
-  useEffect(() => {
-      axios.get('http://localhost:8080/api/hello')
-      .then(response => setHello(response.data))
-      .catch(error => console.log(error))
-  }, []);
-
   const navigate = useNavigate();
 
   const apiGet = async (type, param) => {
@@ -172,12 +171,12 @@ const closeModal = () => {
       <UpperContainer>
         <LogoContainer>
           <LogoImage src="asset/logo.svg" alt="Logo" />
-          {hello}
+          <Text1 onClick={() => { navigate('/Login')}}>로그인</Text1> <Text1 onClick={() => { navigate('/Signin')}}>회원가입</Text1>
         </LogoContainer>
         <ButtonContainer>
           <Button src="asset/newspaper.svg" alt="newspaper" />
-          <Button src="asset/weather.svg" alt="weather" />
-          <Button src="asset/shield.svg" alt="shield" />
+          <Button onClick={() => { navigate('/weather')}} src="asset/weather.svg" alt="weather" />
+          <Button onClick={() => { navigate('/keyword')}} src="asset/shield.svg" alt="shield" />
           <Button src="asset/newspaper.svg" alt="newspaper" />
         </ButtonContainer>
       </UpperContainer>

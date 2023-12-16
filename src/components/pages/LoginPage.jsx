@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LogInput from "../ui/LogInput";
 
@@ -26,6 +27,33 @@ const SubmitButton = styled.button`
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const sendDataToServer = async () => {
+    try {
+      const data = { id: username, passwd: password };
+      const response = await fetch('http://localhost:8080/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        // HTTP 상태 코드가 200번대이면 성공으로 간주
+        const responseData = await response.json();
+        console.log('서버 응답:', responseData);
+      } else {
+        // 성공하지 않은 경우
+        console.error('서버 응답 오류:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('데이터 전송 오류:', error);
+    }
+
+    navigate('/');
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -50,7 +78,7 @@ const LoginPage = () => {
           value={password}
           onChange={setPassword}
         />
-        <SubmitButton type="submit">Login</SubmitButton>
+        <SubmitButton onClick={sendDataToServer} type="submit">Login</SubmitButton>
       </LoginForm>
     </PageWrapper>
   );
