@@ -67,8 +67,8 @@ const WeahterPage = () => {
       const todayDate = `${year}${month}${day}`;
       const time = date.getHours();
       setTodayDate(todayDate);
-      setThisTime(thisTime - 1);
-      console.log(time);
+      setThisTime(time);
+      console.log("시간",time);
     };
 
     const getCurrentPosition = () => {
@@ -87,11 +87,42 @@ const WeahterPage = () => {
     getCurrentPosition();
   }, []);
 
+  const calculateBaseTime = () => {
+    const now = new Date(); 
+    let baseTime = 0;
+    let year = now.getFullYear();
+    let month = String(now.getMonth() + 1).padStart(2, '0');
+    let day = String(now.getDate()).padStart(2, '0');
+    // Base_time 정의
+    const baseTimes = [200, 500, 800, 1100, 1400, 1700, 2000, 2300];
+  
+    // API 제공 시간(~이후) 정의
+    const apiSupplyTimes = [210, 510, 810, 1110, 1410, 1710, 2010, 2310];
+  
+    // 현재 시간에서 baseTimes를 차례대로 비교하여 가장 최근의 시간을 찾음
+    for (let i = 0; i < baseTimes.length; i++) {
+      if (now.getHours() * 100 + now.getMinutes() < apiSupplyTimes[i]) {
+        baseTime = baseTimes[i - 1 >= 0 ? i - 1 : baseTimes.length - 1];
+        if (now.getHours() * 100 + now.getMinutes() <= 209) {
+          now.setDate(now.getDate() - 1);
+        }        
+        break;
+      }
+    }
+
+    
+  
+    return baseTime;
+  }
+  
+  const currentBaseTime = calculateBaseTime();
+  console.log(`현재 시간에 대응하는 base_time: ${currentBaseTime}`);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=HHvG3%2F3Mx%2BtbYNvb%2BfJhtqOdTOgqEscPhlnGIB3znKp3p%2FEhIf6N5ZziE3hRJ87zIhcgzgsB7ZjJWHW7XCO%2BsQ%3D%3D&pageNo=1&numOfRows=12&dataType=XML&base_date=${todayDate}&base_time=2000&nx=55&ny=127`
+          `https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=HHvG3%2F3Mx%2BtbYNvb%2BfJhtqOdTOgqEscPhlnGIB3znKp3p%2FEhIf6N5ZziE3hRJ87zIhcgzgsB7ZjJWHW7XCO%2BsQ%3D%3D&pageNo=1&numOfRows=12&dataType=XML&base_date=${todayDate}&base_time=${currentBaseTime}&nx=55&ny=127`
         );
 
         if (!response.ok) {
