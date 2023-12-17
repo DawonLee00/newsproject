@@ -147,6 +147,11 @@ const WeatherInfoItem = styled.div`
 `;
 
 const WeatherPage = ({ weatherData }) => {
+  const now= new Date();
+  let year = now.getFullYear();
+  let month = String(now.getMonth() + 1).padStart(2, '0');
+  let day = String(now.getDate()).padStart(2, '0');
+
   const renderWeatherInfo = () => {
     if (!weatherData || !weatherData.response || !weatherData.response.body || !weatherData.response.body[0].items || !weatherData.response.body[0].items[0].item) {
       return null;
@@ -159,9 +164,9 @@ const WeatherPage = ({ weatherData }) => {
         <InfoContainer>
         <NoteContainer2>  
         <ImageContainer src={getWeatherImageSrc(weatherItems)} />
-        
+
           <NoteContainerWrapper>
-            <Text>2023년 12월 17일</Text> 
+            <Text>{year}년 {month}월 {day}일</Text> 
                   <NoteContainer>
                     
                     <BoldText>{getFormattedValue('TMP', weatherItems.find(item => item.category[0] === 'TMP').fcstValue[0])}°C</BoldText>

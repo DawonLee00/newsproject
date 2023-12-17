@@ -21,7 +21,7 @@ function App(props) {
               <Route path="Login" element={<LoginPage/>} />  
               <Route path="Signin" element={<SignInPage/>} />  
               <Route path="keyword" element={<KeywordPage/>} /> 
-              <Route path="Quiz" element={<QuizPage/>} /> 
+              <Route path="quiz" element={<QuizPage/>} /> 
               <Route path="weather" element={<WeahterPage/>}/>
           </Routes>
       </BrowserRouter>

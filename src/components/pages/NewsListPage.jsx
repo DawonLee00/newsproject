@@ -151,7 +151,7 @@ const NewsListPage = () => {
   };
 
   useEffect(() => {
-    apiGet('news','코스피');
+    apiGet('news','사회');
 }, []);
 
 const openModal = (content) => {
@@ -177,7 +177,7 @@ const closeModal = () => {
           <Button src="asset/newspaper.svg" alt="newspaper" />
           <Button onClick={() => { navigate('/weather')}} src="asset/weather.svg" alt="weather" />
           <Button onClick={() => { navigate('/keyword')}} src="asset/shield.svg" alt="shield" />
-          <Button src="asset/newspaper.svg" alt="newspaper" />
+          <Button onClick={() => { navigate('/quiz')}} src="asset/grapes.svg" alt="grapes" />
         </ButtonContainer>
       </UpperContainer>
 
