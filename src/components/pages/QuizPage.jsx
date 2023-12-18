@@ -275,8 +275,7 @@ const MiddleContainer = styled.div`
     };
 
     const openai = new OpenAI({
-      apiKey: "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",
-      //process.env.REACT_APP_OPENAI_API_KEY,
+      apiKey: process.env.REACT_APP_OPENAI_API_KEY,
       dangerouslyAllowBrowser: true,
     });
     
